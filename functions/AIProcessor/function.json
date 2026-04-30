@@ -1,11 +1,9 @@
 {
   "bindings": [
     {
-      "name": "myBlob",
-      "type": "blobTrigger",
+      "type": "eventGridTrigger",
       "direction": "in",
-      "path": "uploads/{name}",
-      "connection": "STORAGE_CONN"
+      "name": "eventGridEvent"
     }
   ]
 }
