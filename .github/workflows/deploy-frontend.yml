@@ -1,0 +1,26 @@
+name: Deploy Frontend to Azure Blob Storage
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'frontend/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Upload frontend to Blob Storage $web container
+        uses: azure/CLI@v2
+        with:
+          inlineScript: |
+            az storage blob upload-batch \
+              --account-name ${{ secrets.AZURE_STORAGE_ACCOUNT }} \
+              --account-key ${{ secrets.AZURE_STORAGE_KEY }} \
+              --source ./frontend \
+              --destination '$web' \
+              --overwrite true
+            echo 'Frontend deployed to Azure Blob Storage!'
